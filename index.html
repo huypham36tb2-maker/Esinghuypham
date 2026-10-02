@@ -1,295 +1,878 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HP Studio - Mobileconfig Generator</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-        .container {
-            background: #fff;
-            width: 100%;
-            max-width: 480px;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
-            padding: 22px 18px;
-            text-align: center;
-        }
-        .logo {
-            width: 55px; height: 55px;
-            background: #fff;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 20px;
-            color: #203a43;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .header h1 { font-size: 20px; margin-bottom: 4px; }
-        .header p { font-size: 12px; opacity: 0.85; }
-        .body { padding: 20px 18px; }
-        .form-group { margin-bottom: 16px; }
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            -webkit-appearance: none;
-        }
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
-        }
-        input[type="file"] {
-            width: 100%;
-            padding: 12px;
-            border: 1.5px dashed #bbb;
-            border-radius: 8px;
-            background: #fafafa;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .note { font-size: 11px; color: #888; margin-top: 5px; }
-        button {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 5px;
-            -webkit-appearance: none;
-        }
-        button:active { transform: scale(0.98); }
-        button:disabled { background: #aaa; cursor: not-allowed; }
-        .status {
-            margin-top: 14px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-        }
-        .status.success { background: #e6f7e9; color: #1a7a2e; display: block; }
-        .status.error { background: #fdeaea; color: #b3261e; display: block; }
-        .status.info { background: #e8f0fe; color: #1a56b8; display: block; }
-        .footer {
-            text-align: center;
-            padding: 12px;
-            font-size: 11px;
-            color: #999;
-            background: #fafafa;
-            border-top: 1px solid #eee;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HP Studio - Ký và Chứng Chỉ</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #fff;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* ---------- HEADER ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .topbar .brand { font-size: 15px; color: #555; }
+  .topbar .brand b { color: #222; }
+  .topbar .search {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: #666;
+  }
+  .subbar {
+    background: #2c2c2c;
+    color: #ddd;
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  /* ---------- POST HEADER ---------- */
+  .post-header {
+    padding: 18px 16px 6px;
+    position: relative;
+  }
+  .date-badge {
+    display: inline-block;
+    background: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .date-badge .m { background: #666; padding: 2px 8px; display: block; }
+  .date-badge .d { padding: 3px 8px; display: block; font-size: 15px; font-weight: 600; }
+  .post-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    text-align: center;
+    padding: 10px 16px 20px;
+  }
+  .hero .logo-circle {
+    width: 180px; height: 180px;
+    background: #000;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    flex-direction: column;
+  }
+  .hero .logo-circle .esign { font-size: 38px; font-weight: 700; letter-spacing: 1px; }
+  .hero .logo-circle .esign span { font-weight: 400; }
+  .hero .logo-circle .byline { font-size: 15px; margin-top: 2px; }
+  .hero .studio-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .hero .meta { font-size: 13px; color: #888; }
+  .hero .meta a { color: #2a8; text-decoration: none; }
+
+  /* ---------- POST BUTTONS ---------- */
+  .post-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 20px;
+  }
+  .btn-post {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .comment-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #666;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  /* ---------- SECTION ---------- */
+  .section {
+    border-top: 8px solid #7fb8d0;
+    padding: 20px 16px 30px;
+  }
+  .section-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 18px;
+  }
+  .date-inline {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .date-inline .date-badge { margin: 0; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn-outline {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    padding: 10px 16px;
+    border: 2px solid #222;
+    background: #fff;
+    color: #222;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 0;
+    text-decoration: none;
+  }
+  .btn-outline:active { background: #eee; }
+  .btn-blue {
+    background: #0a84ff;
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 90px;
+  }
+  .btn-blue:active { background: #0066cc; }
+  .btn-black {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 12px 0;
+  }
+  .btn-black:active { opacity: 0.8; }
+
+  /* ---------- CERT LIST ---------- */
+  .cert-list { display: flex; flex-direction: column; gap: 10px; }
+  .cert-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #fff;
+  }
+  .cert-card .info { flex: 1; min-width: 0; }
+  .cert-card .name { font-size: 15px; font-weight: 700; color: #222; }
+  .cert-card .org { font-size: 13px; color: #888; margin-top: 2px; }
+  .cert-card .right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-size: 11px;
+    color: #666;
+    white-space: nowrap;
+  }
+  .dot-red { display: inline-block; width: 8px; height: 8px; background: #e53935; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .dot-blue { color: #2196f3; }
+
+  /* ---------- BOX ---------- */
+  .info-box {
+    border: 1.5px dashed #b0b0b0;
+    border-radius: 10px;
+    padding: 22px 16px;
+    text-align: center;
+    margin: 18px 0;
+    background: #fafafa;
+  }
+  .info-box .hourglass { font-size: 30px; }
+  .info-box .title { font-size: 16px; font-weight: 700; margin: 10px 0 4px; color: #333; }
+  .info-box .sub { font-size: 12px; color: #888; margin-bottom: 10px; }
+  .info-box .warn { font-size: 13px; color: #c0392b; font-weight: 600; }
+
+  /* ---------- APP SIGNED ---------- */
+  .app-block { margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px dashed #ccc; }
+  .app-block:last-child { border-bottom: none; }
+  .app-name { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .app-feature { font-size: 14px; color: #444; margin: 4px 0; }
+  .check { color: #2ecc40; font-weight: 700; }
+  .note-label { font-size: 13px; color: #555; font-style: italic; margin: 10px 0 4px; }
+
+  /* ---------- JAILBREAK ---------- */
+  .jb-block { margin-bottom: 26px; }
+  .jb-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .jb-name .author { font-weight: 400; color: #666; font-size: 13px; }
+  .jb-line { font-size: 14px; color: #444; margin: 3px 0; }
+  .jb-line b { color: #222; }
+
+  /* ---------- FAB ---------- */
+  .fab {
+    position: fixed;
+    right: 16px;
+    bottom: 30px;
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    background: #0a84ff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 6px 18px rgba(10,132,255,0.4);
+    cursor: pointer;
+    z-index: 100;
+  }
+</style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div class="logo">HP</div>
-        <h1>HP Studio</h1>
-        <p>Mobileconfig Generator</p>
-    </div>
 
-    <div class="body">
-        <div class="form-group">
-            <label>1. File chứng chỉ (.cer / .crt / .pem)</label>
-            <input type="file" id="certFile" accept=".cer,.crt,.pem">
-            <div class="note">Chọn file cert bạn muốn đóng gói.</div>
-        </div>
+<!-- ============ HEADER ============ -->
+<div class="topbar">
+  <div class="brand"><b>HP</b> Studio &nbsp; hpstudio</div>
+  <div class="search">🔍</div>
+</div>
+<div class="subbar">Trang chủ</div>
 
-        <div class="form-group">
-            <label>2. Tên hiển thị</label>
-            <input type="text" id="displayName" value="HP Studio Cert">
-        </div>
-
-        <div class="form-group">
-            <label>3. Tên tổ chức</label>
-            <input type="text" id="orgName" value="HP Studio">
-        </div>
-
-        <div class="form-group">
-            <label>4. Bundle Identifier</label>
-            <input type="text" id="bundleId" value="com.hpstudio">
-        </div>
-
-        <button id="btnCreate" onclick="createMobileconfig()">📦 Tạo file Mobileconfig</button>
-        <div class="status" id="status"></div>
-    </div>
-
-    <div class="footer">© HP Studio — Mobileconfig Generator</div>
+<!-- ============ POST HEADER ============ -->
+<div class="post-header">
+  <div class="date-badge"><span class="m">AUG</span><span class="d">22</span></div>
+  <div class="post-title">HP Studio</div>
 </div>
 
-<script>
-function genUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="logo-circle">
+    <div class="esign">ESign</div>
+    <div class="byline">By HP</div>
+  </div>
+  <div class="studio-name">HP Studio</div>
+  <div class="meta">Đăng 22nd August bởi <a href="#">Ký và Chứng Chỉ</a></div>
+</div>
 
-function readCertBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => {
-            const text = e.target.result;
-            if (text.includes('-----BEGIN CERTIFICATE-----')) {
-                // File PEM dạng text
-                const b64 = text
-                    .replace(/-----BEGIN CERTIFICATE-----/g, '')
-                    .replace(/-----END CERTIFICATE-----/g, '')
-                    .replace(/\s+/g, '');
-                resolve(b64);
-            } else {
-                // File DER nhị phân
-                const reader2 = new FileReader();
-                reader2.onload = ev => {
-                    const bytes = new Uint8Array(ev.target.result);
-                    let binary = '';
-                    const chunk = 0x8000;
-                    for (let i = 0; i < bytes.length; i += chunk) {
-                        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-                    }
-                    resolve(btoa(binary));
-                };
-                reader2.onerror = reject;
-                reader2.readAsArrayBuffer(file);
-            }
-        };
-        reader.onerror = reject;
-        reader.readAsText(file);
-    });
-}
+<div class="post-actions">
+  <button class="btn-post">𝕏 Post</button>
+  <a href="#" class="comment-link">💬 Xem nhận xét</a>
+</div>
 
-async function createMobileconfig() {
-    const statusEl = document.getElementById('status');
-    const btn = document.getElementById('btnCreate');
-    statusEl.className = 'status';
-    statusEl.style.display = 'none';
+<!-- ============ DNS & CERTIFICATE ============ -->
+<div class="section">
+  <div class="section-title">DNS &amp; Certificate</div>
+  <div class="section-sub">Dns blocked Revoke ( ! UPDATE 19/9/2026 ! )</div>
 
-    const fileInput = document.getElementById('certFile');
-    const file = fileInput.files[0];
+  <div style="display:flex; flex-direction:column; align-items:flex-start;">
+    <button class="btn-outline">Install DNS</button>
+  </div>
 
-    if (!file) {
-        showStatus('⚠️ Vui lòng chọn file chứng chỉ', 'error');
-        return;
-    }
+  <p style="margin-top:10px; font-size:14px;">Cert File ( 27/9 )</p>
+  <button class="btn-outline">Install Cert</button>
+  <p style="font-size:12px; color:#777; margin-top:4px;">pass : trong file</p>
 
-    const displayName = document.getElementById('displayName').value.trim() || 'HP Studio Cert';
-    const orgName = document.getElementById('orgName').value.trim() || 'HP Studio';
-    const bundleId = document.getElementById('bundleId').value.trim() || 'com.hpstudio';
+  <div class="date-inline" style="margin-top:18px;">
+    <div class="date-badge"><span class="m">JUL</span><span class="d">10</span></div>
+  </div>
+  <div class="section-title" style="font-size:20px;">HP Studio</div>
+  <div class="meta" style="text-align:center; font-size:12px; color:#888;">Đăng 10th July bởi <a href="#" style="color:#2a8;">Ký và Chứng Chỉ</a></div>
+</div>
 
-    btn.disabled = true;
-    btn.textContent = '⏳ Đang xử lý...';
+<!-- ============ ESIGN HP ============ -->
+<div class="section">
+  <div class="date-inline">
+    <div class="date-badge"><span class="m">FEB</span><span class="d">9</span></div>
+  </div>
+  <div class="section-title">Esign HP ( 12.0 — 26.5.1 )</div>
 
-    try {
-        const certBase64 = await readCertBase64(file);
-        const uuidCert = genUUID();
-        const uuidProfile = genUUID();
+  <div class="info-box">
+    <div class="hourglass">⏳</div>
+    <div class="title">Cert Tiếp Theo : China FAW Corporation Limited</div>
+    <div class="sub">Thời Gian Cập Nhật : Chưa Rõ</div>
+    <div class="warn">‼️ Đây Là Chứng Chỉ Dự Kiến Và Có Thể Không Phải Là Chứng Chỉ Trong Danh Sách Cập Nhật ‼️</div>
+  </div>
 
-        const mobileconfig = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>PayloadContent</key>
-    <array>
-        <dict>
-            <key>PayloadCertificateFileName</key>
-            <string>${file.name}</string>
-            <key>PayloadContent</key>
-            <data>${certBase64}</data>
-            <key>PayloadDescription</key>
-            <string>Cài đặt chứng chỉ ${orgName}</string>
-            <key>PayloadDisplayName</key>
-            <string>${displayName}</string>
-            <key>PayloadIdentifier</key>
-            <string>${bundleId}.cert</string>
-            <key>PayloadType</key>
-            <string>com.apple.security.root</string>
-            <key>PayloadUUID</key>
-            <string>${uuidCert}</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-        </dict>
-    </array>
-    <key>PayloadDescription</key>
-    <string>Profile cài đặt chứng chỉ ${orgName}</string>
-    <key>PayloadDisplayName</key>
-    <string>${displayName}</string>
-    <key>PayloadIdentifier</key>
-    <string>${bundleId}.profile</string>
-    <key>PayloadOrganization</key>
-    <string>${orgName}</string>
-    <key>PayloadRemovalDisallowed</key>
-    <false/>
-    <key>PayloadType</key>
-    <string>Configuration</string>
-    <key>PayloadUUID</key>
-    <string>${uuidProfile}</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-</dict>
-</plist>`;
+  <div class="cert-list">
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Beihang University</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 28/9/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 4/12/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
 
-        const fileName = `${bundleId}.mobileconfig`;
-        const blob = new Blob([mobileconfig], { type: 'application/x-apple-aspen-config' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">NAVECO Co,Ltd (Ver 2)</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 18/12/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 3/</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
 
-        setTimeout(() => URL.revokeObjectURL(url), 3000);
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">NAVECO Co,Ltd</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 15/12/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 19/11/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
 
-        showStatus('✅ Đã tạo file ' + fileName + '. Kiểm tra thư mục Tải về.', 'success');
-    } catch (err) {
-        console.error(err);
-        showStatus('❌ Lỗi: ' + err.message, 'error');
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '📦 Tạo file Mobileconfig';
-    }
-}
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">HSBC Bank plc</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 25/8/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 4/5/2027</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
 
-function showStatus(msg, type) {
-    const statusEl = document.getElementById('status');
-    statusEl.textContent = msg;
-    statusEl.className = 'status ' + type;
-    statusEl.style.display = 'block';
-}
-</script>
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">CENTRAL POWER CORPORA...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 1/4/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 20/11/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Hangzhou City Commercial Ba...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 7/8/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 27/8/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Vietnam Rubber Industry Fact...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 15/11/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 25/9/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Tianjin University Extension</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 1/5/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 17/5/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+  </div>
+
+  <div class="post-actions" style="padding-top:18px;">
+    <button class="btn-post">𝕏 Post</button>
+    <a href="#" class="comment-link">💬 Xem nhận xét</a>
+  </div>
+</div>
+
+<!-- ============ ESIGN IOS ============ -->
+<div class="section">
+  <div class="date-inline">
+    <div class="date-badge"><span class="m">SEP</span><span class="d">10</span></div>
+  </div>
+  <div class="section-title">Esign ( only ios 12.0 – 26 )</div>
+
+  <div class="cert-list">
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Moving Increasingly Interconn...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 15/6/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 12/6/2027</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">China Telecom Corporation</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 17/6/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 23/4/2027</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Boc International Limited</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 1/6/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 6/11/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Design Institute Co.,Ltd</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 28/5/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 11/8/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Aramco Services Company</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 14/5/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 24/9/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">China Continent Property</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 23/4/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 13/</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">National Oilwell Varco, Inc.</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 24/3/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 27/1/2027</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">XL AXIATA , PT TBK</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 7/5/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 19/2/2027</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">VietNam Airlines</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 25/6/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 9/8/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Vietinbank Group</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 16/7/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 24/5/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Forevermark Marketing Limited</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 25/2/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 7/11/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">China Academy of Railway Sci...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 7/2/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 10/11/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Ministere de Inc</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 3/4/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: không rõ</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Commission on Elections</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 9/1/2026</span>
+        <span class="dot-blue">⚙ Hết Hạn: 26/8/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Wasu Media NetWork</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 13/12/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 12/1/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Etisalat – Emirates Telecommun...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 10/12/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 9/4/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">China Telecom</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 19/6/2025</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Guangzhou Huahan Educational</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 24/2/2025</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">China National Heavy Duty Truck G...</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 24/9/2025</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">PowerChina International</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 2/12/2025</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+
+    <div class="cert-card">
+      <div class="info">
+        <div class="name">Esign HP</div>
+        <div class="org">Gobal Takeoff Inc</div>
+      </div>
+      <div class="right">
+        <span><span class="dot-red"></span>Thu Hồi</span>
+        <span>🕐 19/8/2025</span>
+        <span class="dot-blue">⚙ Hết Hạn: 26/6/2026</span>
+      </div>
+      <button class="btn-blue">Install</button>
+    </div>
+  </div>
+
+  <div class="post-actions" style="padding-top:18px;">
+    <button class="btn-post">𝕏 Post</button>
+    <a href="#" class="comment-link">💬 Xem nhận xét</a>
+  </div>
+</div>
+
+<!-- ============ APP SIGNED ============ -->
+<div class="section">
+  <div class="date-inline">
+    <div class="date-badge"><span class="m">JUL</span><span class="d">25</span></div>
+  </div>
+  <div class="section-title">App Signed ✅</div>
+
+  <!-- ROBLOX -->
+  <div class="app-block">
+    <div class="app-name">Roblox Delta ( v2.730 )</div>
+    <div class="app-feature">• Link Tải Trực Tiếp 🔗</div>
+    <div class="app-feature">• Cập Nhật Liên Tục <span class="check">✅</span></div>
+
+    <button class="btn-outline">Install Delta Quốc Tế</button>
+    <button class="btn-outline">Install Delta x VNG</button>
+
+    <div class="note-label">[ Ipa Tự Ký ( Sử Dụng Chứng Chỉ Của Bạn ) ]</div>
+    <button class="btn-outline">Install Delta Quốc Tế Ipa</button>
+    <button class="btn-outline">Install Delta x VNG Ipa</button>
+  </div>
+
+  <!-- MINECRAFT -->
+  <div class="app-block">
+    <div class="app-name">Minecraf ( v26.33 )</div>
+    <div class="app-feature">• Link Tải Trực Tiếp 🔗</div>
+    <div class="app-feature">• Đăng Nhập Được xbox <span class="check">✅</span></div>
+    <div class="app-feature">• Cập Nhật Liên Tục <span class="check">✅</span></div>
+
+    <button class="btn-outline">Install Minecraf</button>
+
+    <div class="note-label">[ Ipa Tự Ký ( Sử Dụng Chứng Chỉ Của Bạn ) ]</div>
+    <button class="btn-outline">Install Minecraf Ipa</button>
+
+    <div class="app-feature" style="margin-top:10px;">• Tải Từ AppStore Chính Thức ( ID sẽ reset mỗi 6 giờ )</div>
+    <button class="btn-outline">Get ID Apple Free</button>
+  </div>
+
+  <div style="background:#fff9e6; padding:14px; border-radius:8px; margin-top:14px; font-size:14px; line-height:1.6;">
+    🧑‍💻 <b>Thuê Id Apple Tài Minecraft chỉ với 9k</b><br>
+    🧑‍💻 Liên hệ TikTok @hpstudio_ hoặc qua tele <a href="https://t.me/hpstudio" style="color:#2196f3;">https://t.me/hpstudio</a>
+  </div>
+</div>
+
+<!-- ============ TROLLX + TOOL CHẶN FMI ============ -->
+<div class="section">
+  <div class="section-title" style="font-size:18px;">Troll X •@khoindvn• ‼️ only ios 14.0 – 16.6.1 and ios17.0 ‼️</div>
+  <button class="btn-outline" style="margin-top:14px;">Install</button>
+
+  <p style="margin-top:20px; font-size:15px;">Tool Chặn FMI</p>
+  <button class="btn-outline">Install</button>
+
+  <div class="post-actions" style="padding-top:18px;">
+    <button class="btn-post">𝕏 Post</button>
+    <a href="#" class="comment-link">💬 Xem nhận xét</a>
+  </div>
+</div>
+
+<!-- ============ IPA JAILBREAK ============ -->
+<div class="section">
+  <div class="date-inline">
+    <div class="date-badge"><span class="m">JUL</span><span class="d">25</span></div>
+  </div>
+  <div class="section-title">Ipa Jailbreak</div>
+
+  <!-- Dopamine -->
+  <div class="jb-block">
+    <div class="jb-name">• Dopamine 3 Jailbreak <span class="author">( © Developer Oppa34 , Alfie , kok3shidoll )</span></div>
+    <div class="jb-line">- Danh Sách Các Thiết Bị Hỗ Trợ</div>
+    <div class="jb-line">+ Các Máy Chạy Chip Apple : A8X, A9, A9X, A10, A10X, A11 ( Yêu Cầu los 14 trở đi )</div>
+    <div class="jb-line">+ Các Dòng Chip Apple : A12, A12X, A12Z, A13 ( Hỗ Trợ los 16-18.7.1 và los 26.0-26.1 Beta 3)</div>
+    <div class="jb-line">+ Các Dòng Chip Apple Đời Cao : A14, A15, A16, A17, M1, M2 ( Hỗ Trợ los 16.5.1-17.4 Beta 3 )</div>
+    <div class="jb-line">- Kiểu / Quyền Root : RootLess</div>
+    <div class="jb-line">- Tài Nguyên Sau Khi Root : Sileo , Zebra</div>
+    <div class="jb-line">- Lỗ Hổng Khai Thác : TiTan , XPF , Kfd , ClearSword , DarkSword , PPL bypass , SPTM , WebKit , MDC-226, CVE-2026-65400, Landa, Smith, tlbfail , Đặc Biệt : Lỗ Hổng BootRom trên iphone xr-11 không thể vá , OOB Kenrel</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- Relaxin -->
+  <div class="jb-block">
+    <div class="jb-name">• Relaxin</div>
+    <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
+    <div class="jb-line">+ Chạy Chip Apple : Tất Cả Các Thiết Bị ( Chỉ los 17-17.3.1 )</div>
+    <div class="jb-line">- Kiểu/Quyền Root : RootHide</div>
+    <div class="jb-line">- Tài Nguyên : Sileo</div>
+    <div class="jb-line">- Khai Thác Lỗ Hổng : Drawin Kernel</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- Chepamine -->
+  <div class="jb-block">
+    <div class="jb-name">• Chepamine</div>
+    <div class="jb-line">- Lợi Ích : Ngăn Chặn Liệt Cảm Ứng Sau Khi Một Số Máy Thay Màn</div>
+    <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
+    <div class="jb-line">+ Các Dòng Máy Chạy Chip Apple : A9, A9X, A10, A10X, A11 ( los 14-16.6 )</div>
+    <div class="jb-line">- Kiểu / Quyền Root : RootLess</div>
+    <div class="jb-line">- Tài Nguyên : Zerbra</div>
+    <div class="jb-line">- Lỗ Hổng : KFD, PAC, Physpupet</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- Trollinstaller -->
+  <div class="jb-block">
+    <div class="jb-name">• Trollinstaller ( Lấy TrollStore )</div>
+    <div class="jb-line">- Các Thiết Bị Hỗ Trợ :</div>
+    <div class="jb-line">+ Các Dòng Máy Chạy Chip Apple : A9, A9X, A10, A10X, A11 ( los 15-16.7.16 )</div>
+    <div class="jb-line">- Tài Nguyên : TrollStore</div>
+    <div class="jb-line">- Lỗ Hổng Khai Thác : DarkSword , CoreTrust</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- Filza -->
+  <div class="jb-block">
+    <div class="jb-name">• Filza</div>
+    <div class="jb-line">- Danh Sách Thiết Bị Hỗ Trợ : Tất Cả Thiết Bị ( Yêu cầu los 17-18.7.1 )</div>
+    <div class="jb-line">- Tác Dụng : Sửa Đổi Một Số File Hệ Thống</div>
+    <div class="jb-line">- Lỗ Hổng : Sandbox Escape + DarkSword + MDC-2022-4609</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- HP Jailbreak -->
+  <div class="jb-block">
+    <div class="jb-name">• HP Jailbreak ( 40 % copy by Dopamine )</div>
+    <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
+    <div class="jb-line">+ Các Dòng Máy Chạy Chip Apple : A9, A9X, A10, A10X, A11, A12, A12X, A12Z, A13, A14 ( los 14-16.6.2 )</div>
+    <div class="jb-line">- Kiểu / Quyền Root : RootFull</div>
+    <div class="jb-line">- Tài Nguyên : Zerbra, Sileo, Saily, X1</div>
+    <div class="jb-line">- Lỗ Hổng : KFD, PAC, Physpupet, MDC, landa, userland</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <!-- HP Unc0ver -->
+  <div class="jb-block">
+    <div class="jb-name">• HP Unc0ver</div>
+    <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
+    <div class="jb-line">+ Các Dòng Máy Chạy Chip Apple : A9, A9X, A10, A10X, A11, A12, A12X, A12Z, A13, M1 ( los 11-14.8.2 )</div>
+    <div class="jb-line">- Kiểu / Quyền Root : RootFull</div>
+    <div class="jb-line">- Tài Nguyên : Cydia</div>
+    <div class="jb-line">- Lỗ Hổng : KFD, CVE-2021-1782, CVE-2020-9589, Empty_List, MPTCP, mach_swap</div>
+    <button class="btn-black">Get It</button>
+  </div>
+
+  <div class="post-actions" style="padding-top:18px;">
+    <button class="btn-post">𝕏 Post</button>
+    <a href="#" class="comment-link">💬 Xem nhận xét</a>
+  </div>
+</div>
+
+<!-- FAB -->
+<div class="fab">⌨️</div>
+
 </body>
 </html>
