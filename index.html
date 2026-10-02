@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HP Studio - Mobileconfig Generator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            padding: 22px 18px;
+            text-align: center;
+        }
+        .logo {
+            width: 55px; height: 55px;
+            background: #fff;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            color: #203a43;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 20px; margin-bottom: 4px; }
+        .header p { font-size: 12px; opacity: 0.85; }
+        .body { padding: 20px 18px; }
+        .form-group { margin-bottom: 16px; }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px dashed #bbb;
+            border-radius: 8px;
+            background: #fafafa;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .note { font-size: 11px; color: #888; margin-top: 5px; }
+        button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 5px;
+            -webkit-appearance: none;
+        }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #aaa; cursor: not-allowed; }
+        .status {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+        .status.success { background: #e6f7e9; color: #1a7a2e; display: block; }
+        .status.error { background: #fdeaea; color: #b3261e; display: block; }
+        .status.info { background: #e8f0fe; color: #1a56b8; display: block; }
+        .footer {
+            text-align: center;
+            padding: 12px;
+            font-size: 11px;
+            color: #999;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">HP</div>
+        <h1>HP Studio</h1>
+        <p>Mobileconfig Generator</p>
+    </div>
+
+    <div class="body">
+        <div class="form-group">
+            <label>1. File chứng chỉ (.cer / .crt / .pem)</label>
+            <input type="file" id="certFile" accept=".cer,.crt,.pem">
+            <div class="note">Chọn file cert bạn muốn đóng gói.</div>
+        </div>
+
+        <div class="form-group">
+            <label>2. Tên hiển thị</label>
+            <input type="text" id="displayName" value="HP Studio Cert">
+        </div>
+
+        <div class="form-group">
+            <label>3. Tên tổ chức</label>
+            <input type="text" id="orgName" value="HP Studio">
+        </div>
+
+        <div class="form-group">
+            <label>4. Bundle Identifier</label>
+            <input type="text" id="bundleId" value="com.hpstudio">
+        </div>
+
+        <button id="btnCreate" onclick="createMobileconfig()">📦 Tạo file Mobileconfig</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <div class="footer">© HP Studio — Mobileconfig Generator</div>
+</div>
+
+<script>
+function genUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function readCertBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const text = e.target.result;
+            if (text.includes('-----BEGIN CERTIFICATE-----')) {
+                // File PEM dạng text
+                const b64 = text
+                    .replace(/-----BEGIN CERTIFICATE-----/g, '')
+                    .replace(/-----END CERTIFICATE-----/g, '')
+                    .replace(/\s+/g, '');
+                resolve(b64);
+            } else {
+                // File DER nhị phân
+                const reader2 = new FileReader();
+                reader2.onload = ev => {
+                    const bytes = new Uint8Array(ev.target.result);
+                    let binary = '';
+                    const chunk = 0x8000;
+                    for (let i = 0; i < bytes.length; i += chunk) {
+                        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+                    }
+                    resolve(btoa(binary));
+                };
+                reader2.onerror = reject;
+                reader2.readAsArrayBuffer(file);
+            }
+        };
+        reader.onerror = reject;
+        reader.readAsText(file);
+    });
+}
+
+async function createMobileconfig() {
+    const statusEl = document.getElementById('status');
+    const btn = document.getElementById('btnCreate');
+    statusEl.className = 'status';
+    statusEl.style.display = 'none';
+
+    const fileInput = document.getElementById('certFile');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        showStatus('⚠️ Vui lòng chọn file chứng chỉ', 'error');
+        return;
+    }
+
+    const displayName = document.getElementById('displayName').value.trim() || 'HP Studio Cert';
+    const orgName = document.getElementById('orgName').value.trim() || 'HP Studio';
+    const bundleId = document.getElementById('bundleId').value.trim() || 'com.hpstudio';
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Đang xử lý...';
+
+    try {
+        const certBase64 = await readCertBase64(file);
+        const uuidCert = genUUID();
+        const uuidProfile = genUUID();
+
+        const mobileconfig = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadCertificateFileName</key>
+            <string>${file.name}</string>
+            <key>PayloadContent</key>
+            <data>${certBase64}</data>
+            <key>PayloadDescription</key>
+            <string>Cài đặt chứng chỉ ${orgName}</string>
+            <key>PayloadDisplayName</key>
+            <string>${displayName}</string>
+            <key>PayloadIdentifier</key>
+            <string>${bundleId}.cert</string>
+            <key>PayloadType</key>
+            <string>com.apple.security.root</string>
+            <key>PayloadUUID</key>
+            <string>${uuidCert}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Profile cài đặt chứng chỉ ${orgName}</string>
+    <key>PayloadDisplayName</key>
+    <string>${displayName}</string>
+    <key>PayloadIdentifier</key>
+    <string>${bundleId}.profile</string>
+    <key>PayloadOrganization</key>
+    <string>${orgName}</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${uuidProfile}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>`;
+
+        const fileName = `${bundleId}.mobileconfig`;
+        const blob = new Blob([mobileconfig], { type: 'application/x-apple-aspen-config' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+
+        showStatus('✅ Đã tạo file ' + fileName + '. Kiểm tra thư mục Tải về.', 'success');
+    } catch (err) {
+        console.error(err);
+        showStatus('❌ Lỗi: ' + err.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '📦 Tạo file Mobileconfig';
+    }
+}
+
+function showStatus(msg, type) {
+    const statusEl = document.getElementById('status');
+    statusEl.textContent = msg;
+    statusEl.className = 'status ' + type;
+    statusEl.style.display = 'block';
+}
+</script>
+</body>
+</html>
