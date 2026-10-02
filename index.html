@@ -3,234 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HP Studio - Ký và Chứng Chỉ</title>
+<title>HP Studio - DNS, Cert, Esign, App Signed, Jailbreak</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #fff;
-    color: #333;
-    font-size: 15px;
-    line-height: 1.5;
+    background: #fff; color: #333; font-size: 15px; line-height: 1.5;
   }
 
-  /* ---------- HEADER ---------- */
+  /* HEADER */
   .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    background: #f7f7f7;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; background: #f7f7f7; border-bottom: 1px solid #eee;
+    position: sticky; top: 0; z-index: 10;
   }
   .topbar .brand { font-size: 15px; color: #555; }
   .topbar .brand b { color: #222; }
   .topbar .search {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: #eee;
+    width: 30px; height: 30px; border-radius: 50%; background: #eee;
     display: flex; align-items: center; justify-content: center;
     font-size: 15px; color: #666;
   }
-  .subbar {
-    background: #2c2c2c;
-    color: #ddd;
-    font-size: 13px;
-    padding: 8px 14px;
-  }
+  .subbar { background: #2c2c2c; color: #ddd; font-size: 13px; padding: 8px 14px; }
 
-  /* ---------- POST HEADER ---------- */
-  .post-header {
-    padding: 18px 16px 6px;
-    position: relative;
-  }
+  /* POST */
+  .post-header { padding: 18px 16px 6px; }
   .date-badge {
-    display: inline-block;
-    background: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 3px;
-    overflow: hidden;
-    font-size: 11px;
-    line-height: 1.1;
-    margin-bottom: 8px;
+    display: inline-block; background: #555; color: #fff; text-align: center;
+    border-radius: 3px; overflow: hidden; font-size: 11px; line-height: 1.1; margin-bottom: 8px;
   }
   .date-badge .m { background: #666; padding: 2px 8px; display: block; }
   .date-badge .d { padding: 3px 8px; display: block; font-size: 15px; font-weight: 600; }
-  .post-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 4px;
-  }
+  .post-title { font-size: 26px; font-weight: 700; color: #222; margin-bottom: 4px; }
 
-  /* ---------- HERO ---------- */
-  .hero {
-    text-align: center;
-    padding: 10px 16px 20px;
-  }
+  /* HERO */
+  .hero { text-align: center; padding: 10px 16px 20px; }
   .hero .logo-circle {
-    width: 180px; height: 180px;
-    background: #000;
-    border-radius: 50%;
-    margin: 0 auto 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    flex-direction: column;
+    width: 160px; height: 160px; background: #000; border-radius: 50%;
+    margin: 0 auto 18px; display: flex; align-items: center; justify-content: center;
+    color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.15); flex-direction: column;
   }
-  .hero .logo-circle .esign { font-size: 38px; font-weight: 700; letter-spacing: 1px; }
-  .hero .logo-circle .esign span { font-weight: 400; }
-  .hero .logo-circle .byline { font-size: 15px; margin-top: 2px; }
+  .hero .logo-circle .esign { font-size: 34px; font-weight: 700; letter-spacing: 1px; }
+  .hero .logo-circle .byline { font-size: 14px; margin-top: 2px; }
   .hero .studio-name { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
   .hero .meta { font-size: 13px; color: #888; }
   .hero .meta a { color: #2a8; text-decoration: none; }
 
-  /* ---------- POST BUTTONS ---------- */
-  .post-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px 20px;
-  }
+  /* POST ACTIONS */
+  .post-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 8px 16px 20px; }
   .btn-post {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 8px 22px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+    background: #000; color: #fff; border: none; padding: 8px 22px;
+    border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;
   }
   .comment-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #666;
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; background: #666; color: #fff;
+    padding: 6px 14px; border-radius: 6px; font-size: 13px; text-decoration: none;
   }
 
-  /* ---------- SECTION ---------- */
-  .section {
-    border-top: 8px solid #7fb8d0;
-    padding: 20px 16px 30px;
-  }
-  .section-title {
-    text-align: center;
-    font-size: 22px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 4px;
-  }
-  .section-sub {
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 18px;
-  }
-  .date-inline {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 12px;
-  }
+  /* SECTION */
+  .section { border-top: 8px solid #7fb8d0; padding: 20px 16px 30px; }
+  .section-title { text-align: center; font-size: 22px; font-weight: 700; color: #222; margin-bottom: 4px; }
+  .section-sub { text-align: center; font-size: 14px; color: #555; margin-bottom: 18px; }
+  .date-inline { display: flex; justify-content: center; margin-bottom: 12px; }
   .date-inline .date-badge { margin: 0; }
 
-  /* ---------- BUTTONS ---------- */
-  .btn-outline {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    text-align: center;
-    padding: 10px 16px;
-    border: 2px solid #222;
-    background: #fff;
-    color: #222;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 8px 0;
-    text-decoration: none;
+  /* FORM */
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px;
   }
-  .btn-outline:active { background: #eee; }
-  .btn-blue {
-    background: #0a84ff;
-    color: #fff;
-    border: none;
-    padding: 8px 22px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 90px;
+  .form-group input, .form-group select {
+    width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+    font-size: 14px; outline: none; -webkit-appearance: none; background: #fff;
   }
-  .btn-blue:active { background: #0066cc; }
-  .btn-black {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 12px 0;
+  .form-group input:focus, .form-group select:focus {
+    border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
   }
-  .btn-black:active { opacity: 0.8; }
+  .form-group .note { font-size: 11px; color: #888; margin-top: 5px; }
 
-  /* ---------- CERT LIST ---------- */
+  /* DNS PRESET LIST */
+  .dns-preset {
+    display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border: 1.5px solid #e5e5e5; border-radius: 10px; margin-bottom: 10px;
+    cursor: pointer; transition: 0.15s; background: #fff;
+  }
+  .dns-preset:hover { border-color: #2a5298; background: #f0f6ff; }
+  .dns-preset.active { border-color: #2a5298; background: #e8f0fe; }
+  .dns-preset .flag { font-size: 24px; }
+  .dns-preset .info { flex: 1; }
+  .dns-preset .name { font-size: 14px; font-weight: 700; color: #222; }
+  .dns-preset .addr { font-size: 12px; color: #888; margin-top: 2px; word-break: break-all; }
+
+  /* BUTTONS */
+  .btn-blue {
+    width: 100%; padding: 13px; background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600;
+    cursor: pointer; margin-top: 10px;
+  }
+  .btn-blue:active { transform: scale(0.98); }
+  .btn-blue:disabled { background: #aaa; cursor: not-allowed; }
+  .btn-outline {
+    display: block; width: 100%; max-width: 220px; text-align: center;
+    padding: 10px 16px; border: 2px solid #222; background: #fff; color: #222;
+    border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;
+    margin: 8px 0; text-decoration: none;
+  }
+  .btn-black {
+    background: #000; color: #fff; border: none; padding: 10px 24px;
+    border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin: 12px 0;
+  }
+
+  /* STATUS */
+  .status {
+    margin-top: 14px; padding: 12px; border-radius: 8px;
+    font-size: 13px; text-align: center; display: none;
+  }
+  .status.success { background: #e6f7e9; color: #1a7a2e; display: block; }
+  .status.error { background: #fdeaea; color: #b3261e; display: block; }
+  .status.info { background: #e8f0fe; color: #1a56b8; display: block; }
+
+  /* CERT LIST */
   .cert-list { display: flex; flex-direction: column; gap: 10px; }
   .cert-card {
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    background: #fff;
+    border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; background: #fff;
   }
   .cert-card .info { flex: 1; min-width: 0; }
   .cert-card .name { font-size: 15px; font-weight: 700; color: #222; }
   .cert-card .org { font-size: 13px; color: #888; margin-top: 2px; }
   .cert-card .right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-    font-size: 11px;
-    color: #666;
-    white-space: nowrap;
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 4px; font-size: 11px; color: #666; white-space: nowrap;
   }
+  .btn-install-blue {
+    background: #0a84ff; color: #fff; border: none; padding: 8px 22px;
+    border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;
+    min-width: 90px;
+  }
+  .btn-install-blue:active { background: #0066cc; }
   .dot-red { display: inline-block; width: 8px; height: 8px; background: #e53935; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
   .dot-blue { color: #2196f3; }
 
-  /* ---------- BOX ---------- */
+  /* INFO BOX */
   .info-box {
-    border: 1.5px dashed #b0b0b0;
-    border-radius: 10px;
-    padding: 22px 16px;
-    text-align: center;
-    margin: 18px 0;
-    background: #fafafa;
+    border: 1.5px dashed #b0b0b0; border-radius: 10px; padding: 22px 16px;
+    text-align: center; margin: 18px 0; background: #fafafa;
   }
   .info-box .hourglass { font-size: 30px; }
   .info-box .title { font-size: 16px; font-weight: 700; margin: 10px 0 4px; color: #333; }
   .info-box .sub { font-size: 12px; color: #888; margin-bottom: 10px; }
   .info-box .warn { font-size: 13px; color: #c0392b; font-weight: 600; }
 
-  /* ---------- APP SIGNED ---------- */
+  /* APP BLOCK */
   .app-block { margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px dashed #ccc; }
   .app-block:last-child { border-bottom: none; }
   .app-name { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
@@ -238,29 +163,20 @@
   .check { color: #2ecc40; font-weight: 700; }
   .note-label { font-size: 13px; color: #555; font-style: italic; margin: 10px 0 4px; }
 
-  /* ---------- JAILBREAK ---------- */
+  /* JAILBREAK */
   .jb-block { margin-bottom: 26px; }
   .jb-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
   .jb-name .author { font-weight: 400; color: #666; font-size: 13px; }
   .jb-line { font-size: 14px; color: #444; margin: 3px 0; }
   .jb-line b { color: #222; }
 
-  /* ---------- FAB ---------- */
+  /* FAB */
   .fab {
-    position: fixed;
-    right: 16px;
-    bottom: 30px;
-    width: 55px; height: 55px;
-    border-radius: 50%;
-    background: #0a84ff;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    box-shadow: 0 6px 18px rgba(10,132,255,0.4);
-    cursor: pointer;
-    z-index: 100;
+    position: fixed; right: 16px; bottom: 30px; width: 55px; height: 55px;
+    border-radius: 50%; background: #0a84ff; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 6px 18px rgba(10,132,255,0.4);
+    cursor: pointer; z-index: 100;
   }
 </style>
 </head>
@@ -296,22 +212,94 @@
 
 <!-- ============ DNS & CERTIFICATE ============ -->
 <div class="section">
+  <div class="date-inline">
+    <div class="date-badge"><span class="m">JUL</span><span class="d">10</span></div>
+  </div>
   <div class="section-title">DNS &amp; Certificate</div>
   <div class="section-sub">Dns blocked Revoke ( ! UPDATE 19/9/2026 ! )</div>
 
-  <div style="display:flex; flex-direction:column; align-items:flex-start;">
-    <button class="btn-outline">Install DNS</button>
+  <!-- DNS PRESET -->
+  <p style="font-size:14px; font-weight:600; margin-bottom:8px;">⚡ Chọn nhanh DNS:</p>
+
+  <div class="dns-preset" onclick="selectPreset(this, 'Google', 'https://dns.google/dns-query', '8.8.8.8', '8.8.4.4', 'HTTPS')">
+    <div class="flag">🌐</div>
+    <div class="info">
+      <div class="name">Google DNS</div>
+      <div class="addr">8.8.8.8 · dns.google</div>
+    </div>
   </div>
 
-  <p style="margin-top:10px; font-size:14px;">Cert File ( 27/9 )</p>
+  <div class="dns-preset" onclick="selectPreset(this, 'Cloudflare', 'https://cloudflare-dns.com/dns-query', '1.1.1.1', '1.0.0.1', 'HTTPS')">
+    <div class="flag">☁️</div>
+    <div class="info">
+      <div class="name">Cloudflare DNS</div>
+      <div class="addr">1.1.1.1 · cloudflare-dns.com</div>
+    </div>
+  </div>
+
+  <div class="dns-preset" onclick="selectPreset(this, 'AdGuard', 'https://dns.adguard-dns.com/dns-query', '94.140.14.14', '94.140.15.15', 'HTTPS')">
+    <div class="flag">🛡️</div>
+    <div class="info">
+      <div class="name">AdGuard DNS (Chặn quảng cáo)</div>
+      <div class="addr">94.140.14.14 · dns.adguard-dns.com</div>
+    </div>
+  </div>
+
+  <div class="dns-preset" onclick="selectPreset(this, 'Quad9', 'https://dns.quad9.net/dns-query', '9.9.9.9', '149.112.112.112', 'HTTPS')">
+    <div class="flag">🔒</div>
+    <div class="info">
+      <div class="name">Quad9 DNS (Bảo mật)</div>
+      <div class="addr">9.9.9.9 · dns.quad9.net</div>
+    </div>
+  </div>
+
+  <div class="dns-preset" onclick="selectPreset(this, 'NextDNS', 'https://dns.nextdns.io', '45.90.28.0', '45.90.30.0', 'HTTPS')">
+    <div class="flag">⚙️</div>
+    <div class="info">
+      <div class="name">NextDNS</div>
+      <div class="addr">45.90.28.0 · dns.nextdns.io</div>
+    </div>
+  </div>
+
+  <!-- FORM DNS -->
+  <div style="margin-top:18px;">
+    <div class="form-group">
+      <label>Tên DNS (Display Name)</label>
+      <input type="text" id="dnsName" value="HP Studio DNS">
+    </div>
+
+    <div class="form-group">
+      <label>Giao thức</label>
+      <select id="dnsProtocol">
+        <option value="HTTPS">DNS over HTTPS (DoH)</option>
+        <option value="TLS">DNS over TLS (DoT)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Server URL / Hostname</label>
+      <input type="text" id="dnsServerURL" value="https://dns.google/dns-query">
+      <div class="note">VD: https://dns.google/dns-query hoặc 1.1.1.1</div>
+    </div>
+
+    <div class="form-group">
+      <label>Server Addresses (IP, cách nhau bởi dấu phẩy)</label>
+      <input type="text" id="dnsServerAddrs" value="8.8.8.8, 8.8.4.4">
+    </div>
+
+    <button class="btn-blue" id="btnCreateDNS" onclick="createDNSMobileconfig()">📦 Tạo file Mobileconfig DNS</button>
+    <div class="status" id="statusDNS"></div>
+  </div>
+
+  <!-- CERT -->
+  <p style="margin-top:22px; font-size:14px;">Cert File ( 27/9 )</p>
   <button class="btn-outline">Install Cert</button>
   <p style="font-size:12px; color:#777; margin-top:4px;">pass : trong file</p>
 
-  <div class="date-inline" style="margin-top:18px;">
-    <div class="date-badge"><span class="m">JUL</span><span class="d">10</span></div>
+  <div class="post-actions" style="padding-top:18px;">
+    <button class="btn-post">𝕏 Post</button>
+    <a href="#" class="comment-link">💬 Xem nhận xét</a>
   </div>
-  <div class="section-title" style="font-size:20px;">HP Studio</div>
-  <div class="meta" style="text-align:center; font-size:12px; color:#888;">Đăng 10th July bởi <a href="#" style="color:#2a8;">Ký và Chứng Chỉ</a></div>
 </div>
 
 <!-- ============ ESIGN HP ============ -->
@@ -330,107 +318,83 @@
 
   <div class="cert-list">
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Beihang University</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Beihang University</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 28/9/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 4/12/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">NAVECO Co,Ltd (Ver 2)</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">NAVECO Co,Ltd (Ver 2)</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 18/12/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 3/</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">NAVECO Co,Ltd</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">NAVECO Co,Ltd</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 15/12/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 19/11/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">HSBC Bank plc</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">HSBC Bank plc</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 25/8/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 4/5/2027</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">CENTRAL POWER CORPORA...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">CENTRAL POWER CORPORA...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 1/4/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 20/11/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Hangzhou City Commercial Ba...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Hangzhou City Commercial Ba...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 7/8/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 27/8/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Vietnam Rubber Industry Fact...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Vietnam Rubber Industry Fact...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 15/11/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 25/9/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Tianjin University Extension</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Tianjin University Extension</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 1/5/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 17/5/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
   </div>
 
@@ -449,272 +413,209 @@
 
   <div class="cert-list">
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Moving Increasingly Interconn...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Moving Increasingly Interconn...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 15/6/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 12/6/2027</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">China Telecom Corporation</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">China Telecom Corporation</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 17/6/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 23/4/2027</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Boc International Limited</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Boc International Limited</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 1/6/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 6/11/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Design Institute Co.,Ltd</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Design Institute Co.,Ltd</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 28/5/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 11/8/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Aramco Services Company</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Aramco Services Company</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 14/5/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 24/9/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">China Continent Property</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">China Continent Property</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 23/4/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 13/</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">National Oilwell Varco, Inc.</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">National Oilwell Varco, Inc.</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 24/3/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 27/1/2027</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">XL AXIATA , PT TBK</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">XL AXIATA , PT TBK</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 7/5/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 19/2/2027</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">VietNam Airlines</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">VietNam Airlines</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 25/6/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 9/8/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Vietinbank Group</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Vietinbank Group</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 16/7/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 24/5/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Forevermark Marketing Limited</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Forevermark Marketing Limited</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 25/2/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 7/11/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">China Academy of Railway Sci...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">China Academy of Railway Sci...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 7/2/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 10/11/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Ministere de Inc</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Ministere de Inc</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 3/4/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: không rõ</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Commission on Elections</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Commission on Elections</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 9/1/2026</span>
         <span class="dot-blue">⚙ Hết Hạn: 26/8/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Wasu Media NetWork</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Wasu Media NetWork</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 13/12/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 12/1/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Etisalat – Emirates Telecommun...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Etisalat – Emirates Telecommun...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 10/12/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 9/4/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">China Telecom</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">China Telecom</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 19/6/2025</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Guangzhou Huahan Educational</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Guangzhou Huahan Educational</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 24/2/2025</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">China National Heavy Duty Truck G...</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">China National Heavy Duty Truck G...</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 24/9/2025</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">PowerChina International</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">PowerChina International</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 2/12/2025</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
 
     <div class="cert-card">
-      <div class="info">
-        <div class="name">Esign HP</div>
-        <div class="org">Gobal Takeoff Inc</div>
-      </div>
+      <div class="info"><div class="name">Esign HP</div><div class="org">Gobal Takeoff Inc</div></div>
       <div class="right">
         <span><span class="dot-red"></span>Thu Hồi</span>
         <span>🕐 19/8/2025</span>
         <span class="dot-blue">⚙ Hết Hạn: 26/6/2026</span>
       </div>
-      <button class="btn-blue">Install</button>
+      <button class="btn-install-blue">Install</button>
     </div>
   </div>
 
@@ -731,32 +632,25 @@
   </div>
   <div class="section-title">App Signed ✅</div>
 
-  <!-- ROBLOX -->
   <div class="app-block">
     <div class="app-name">Roblox Delta ( v2.730 )</div>
     <div class="app-feature">• Link Tải Trực Tiếp 🔗</div>
     <div class="app-feature">• Cập Nhật Liên Tục <span class="check">✅</span></div>
-
     <button class="btn-outline">Install Delta Quốc Tế</button>
     <button class="btn-outline">Install Delta x VNG</button>
-
     <div class="note-label">[ Ipa Tự Ký ( Sử Dụng Chứng Chỉ Của Bạn ) ]</div>
     <button class="btn-outline">Install Delta Quốc Tế Ipa</button>
     <button class="btn-outline">Install Delta x VNG Ipa</button>
   </div>
 
-  <!-- MINECRAFT -->
   <div class="app-block">
     <div class="app-name">Minecraf ( v26.33 )</div>
     <div class="app-feature">• Link Tải Trực Tiếp 🔗</div>
     <div class="app-feature">• Đăng Nhập Được xbox <span class="check">✅</span></div>
     <div class="app-feature">• Cập Nhật Liên Tục <span class="check">✅</span></div>
-
     <button class="btn-outline">Install Minecraf</button>
-
     <div class="note-label">[ Ipa Tự Ký ( Sử Dụng Chứng Chỉ Của Bạn ) ]</div>
     <button class="btn-outline">Install Minecraf Ipa</button>
-
     <div class="app-feature" style="margin-top:10px;">• Tải Từ AppStore Chính Thức ( ID sẽ reset mỗi 6 giờ )</div>
     <button class="btn-outline">Get ID Apple Free</button>
   </div>
@@ -771,10 +665,8 @@
 <div class="section">
   <div class="section-title" style="font-size:18px;">Troll X •@khoindvn• ‼️ only ios 14.0 – 16.6.1 and ios17.0 ‼️</div>
   <button class="btn-outline" style="margin-top:14px;">Install</button>
-
   <p style="margin-top:20px; font-size:15px;">Tool Chặn FMI</p>
   <button class="btn-outline">Install</button>
-
   <div class="post-actions" style="padding-top:18px;">
     <button class="btn-post">𝕏 Post</button>
     <a href="#" class="comment-link">💬 Xem nhận xét</a>
@@ -788,7 +680,6 @@
   </div>
   <div class="section-title">Ipa Jailbreak</div>
 
-  <!-- Dopamine -->
   <div class="jb-block">
     <div class="jb-name">• Dopamine 3 Jailbreak <span class="author">( © Developer Oppa34 , Alfie , kok3shidoll )</span></div>
     <div class="jb-line">- Danh Sách Các Thiết Bị Hỗ Trợ</div>
@@ -801,7 +692,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- Relaxin -->
   <div class="jb-block">
     <div class="jb-name">• Relaxin</div>
     <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
@@ -812,7 +702,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- Chepamine -->
   <div class="jb-block">
     <div class="jb-name">• Chepamine</div>
     <div class="jb-line">- Lợi Ích : Ngăn Chặn Liệt Cảm Ứng Sau Khi Một Số Máy Thay Màn</div>
@@ -824,7 +713,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- Trollinstaller -->
   <div class="jb-block">
     <div class="jb-name">• Trollinstaller ( Lấy TrollStore )</div>
     <div class="jb-line">- Các Thiết Bị Hỗ Trợ :</div>
@@ -834,7 +722,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- Filza -->
   <div class="jb-block">
     <div class="jb-name">• Filza</div>
     <div class="jb-line">- Danh Sách Thiết Bị Hỗ Trợ : Tất Cả Thiết Bị ( Yêu cầu los 17-18.7.1 )</div>
@@ -843,7 +730,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- HP Jailbreak -->
   <div class="jb-block">
     <div class="jb-name">• HP Jailbreak ( 40 % copy by Dopamine )</div>
     <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
@@ -854,7 +740,6 @@
     <button class="btn-black">Get It</button>
   </div>
 
-  <!-- HP Unc0ver -->
   <div class="jb-block">
     <div class="jb-name">• HP Unc0ver</div>
     <div class="jb-line">- Thiết Bị Hỗ Trợ :</div>
@@ -874,5 +759,138 @@
 <!-- FAB -->
 <div class="fab">⌨️</div>
 
+<script>
+// ================== DNS PRESET ==================
+function selectPreset(el, name, url, addr1, addr2, protocol) {
+  document.querySelectorAll('.dns-preset').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+
+  document.getElementById('dnsName').value = name + ' DNS';
+  document.getElementById('dnsProtocol').value = protocol;
+  document.getElementById('dnsServerURL').value = url;
+  document.getElementById('dnsServerAddrs').value = addr1 + ', ' + addr2;
+}
+
+// ================== UUID ==================
+function genUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+// ================== TẠO MOBILECONFIG DNS ==================
+function createDNSMobileconfig() {
+  const statusEl = document.getElementById('statusDNS');
+  const btn = document.getElementById('btnCreateDNS');
+  statusEl.className = 'status';
+  statusEl.style.display = 'none';
+
+  const dnsName = document.getElementById('dnsName').value.trim() || 'HP Studio DNS';
+  const protocol = document.getElementById('dnsProtocol').value;
+  const serverURL = document.getElementById('dnsServerURL').value.trim();
+  const serverAddrs = document.getElementById('dnsServerAddrs').value
+    .split(',').map(s => s.trim()).filter(s => s);
+
+  if (!serverURL && serverAddrs.length === 0) {
+    showStatus('⚠️ Vui lòng nhập ít nhất Server URL hoặc Server Addresses', 'error');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Đang xử lý...';
+
+  try {
+    const uuidDNS = genUUID();
+    const uuidProfile = genUUID();
+
+    let addrArray = '';
+    if (serverAddrs.length > 0) {
+      addrArray = '<key>ServerAddresses</key><array>';
+      serverAddrs.forEach(a => { addrArray += '<string>' + a + '</string>'; });
+      addrArray += '</array>';
+    }
+
+    let urlKey = '';
+    if (serverURL) {
+      urlKey = '<key>ServerURL</key><string>' + serverURL + '</string>';
+    }
+
+    const mobileconfig = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>DNSSettings</key>
+            <dict>
+                <key>DNSProtocol</key>
+                <string>${protocol}</string>
+                ${urlKey}
+                ${addrArray}
+            </dict>
+            <key>PayloadDescription</key>
+            <string>Cấu hình DNS ${dnsName}</string>
+            <key>PayloadDisplayName</key>
+            <string>${dnsName}</string>
+            <key>PayloadIdentifier</key>
+            <string>com.hpstudio.dns</string>
+            <key>PayloadType</key>
+            <string>com.apple.dnsSettings.managed</string>
+            <key>PayloadUUID</key>
+            <string>${uuidDNS}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+        </dict>
+    </array>
+    <key>PayloadDescription</key>
+    <string>Profile cấu hình DNS ${dnsName}</string>
+    <key>PayloadDisplayName</key>
+    <string>${dnsName}</string>
+    <key>PayloadIdentifier</key>
+    <string>com.hpstudio.dns.profile</string>
+    <key>PayloadOrganization</key>
+    <string>HP Studio</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${uuidProfile}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>`;
+
+    const fileName = 'HPStudio_DNS.mobileconfig';
+    const blob = new Blob([mobileconfig], { type: 'application/x-apple-aspen-config' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+
+    showStatus('✅ Đã tạo ' + fileName + '. Mở file để cài đặt DNS.', 'success');
+  } catch (err) {
+    console.error(err);
+    showStatus('❌ Lỗi: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📦 Tạo file Mobileconfig DNS';
+  }
+}
+
+function showStatus(msg, type) {
+  const statusEl = document.getElementById('statusDNS');
+  statusEl.textContent = msg;
+  statusEl.className = 'status ' + type;
+  statusEl.style.display = 'block';
+}
+</script>
 </body>
 </html>
